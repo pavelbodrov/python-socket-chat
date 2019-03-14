@@ -4,4 +4,3 @@ Simple socket chat with the following features:
 - chat rooms support (create new rooms or join existing ones);
 - centralized file sharing (client-server-client);
 - decentralized file sharing (client-client).
-
