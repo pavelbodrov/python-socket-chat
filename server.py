@@ -157,7 +157,7 @@ class Server:
         """
         file_name, ip, port = re.match('--send_by_link (.+)_(.+):(.+)', msg).groups()
 
-        file_link = "{} shared file link. Type '--get_by_link {}_{}:{}'".format(
+        file_link = "{} shared file link. Type '--get_by_link {}_{}:{}' to download.".format(
             client.name, file_name, ip, port)
         print(file_link)
         self.broadcast(file_link.encode(), client.room)
@@ -200,10 +200,10 @@ class Server:
         if len(self.rooms) != 0:
             client.conn.send("Available rooms:".encode())
             self.show_rooms(client)
+            client.conn.send("Which room you want to join? (Enter new room name to create a new one):".encode())
         else:
-            client.conn.send("There are currently no rooms. Be the first one to create!\n".encode())
+            client.conn.send("There are currently no rooms. Be the first one to create! Enter room name:".encode())
 
-        client.conn.send("Which room you want to join? (type new name to create room)".encode())
         room = client_conn.recv(1024).decode().strip()
 
         while not (re.match('[a-zA-Zа-яА-Я0-9-_*\s]{3,15}', room) and len(room) < 15):

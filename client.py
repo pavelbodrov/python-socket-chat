@@ -163,8 +163,12 @@ class ClientApp:
                         elif re.match('--send_by_link (.+)', message):  # '--send_by_link' in message:
                             self.send_by_link(message)
                         elif '--get_by_link' in message:
-                            file_name, ip, port = re.match('--get_by_link (.+)_(.+):(.+)', message).groups()
-                            Thread(target=self.get_by_link, args=(ip, port, file_name)).start()
+                            try:
+                                file_name, ip, port = re.match('--get_by_link (.+)_(.+):(.+)', message).groups()
+                                Thread(target=self.get_by_link, args=(ip, port, file_name)).start()
+                            except Exception as e:
+                                print("Something went wrong...\n")
+                                print(str(e))
                         else:
                             self.server.send(message.encode())
                             sys.stdout.flush()
